@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.2">
+  <bpmn:process id="invoice_process" isExecutable="true">
+    <bpmn:startEvent id="Start_Invoice_Process" name="Start Invoice Process" camunda:formKey="embedded:app:/forms/start-process.html">
+      <bpmn:outgoing>SequenceFlow_1xwlklw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1rfbws5">
+      <bpmn:incoming>SequenceFlow_1xwlklw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0r3iify</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1r9yo6h</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1xwlklw" sourceRef="Start_Invoice_Process" targetRef="ExclusiveGateway_1rfbws5" />
+    <bpmn:sequenceFlow id="SequenceFlow_0r3iify" sourceRef="ExclusiveGateway_1rfbws5" targetRef="Invoice_Task">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${requestType == 'invoice'}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1r9yo6h" sourceRef="ExclusiveGateway_1rfbws5" targetRef="Credit_Task">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${requestType == 'credit'}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_0uq2idy">
+      <bpmn:incoming>SequenceFlow_0a3516t</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0a3516t" sourceRef="Credit_Task" targetRef="EndEvent_0uq2idy" />
+    <bpmn:endEvent id="EndEvent_1jwhvcw">
+      <bpmn:incoming>SequenceFlow_0sevl6b</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0sevl6b" sourceRef="Invoice_Task" targetRef="EndEvent_1jwhvcw" />
+    <bpmn:userTask id="Invoice_Task" name="Pay invoice" camunda:formKey="embedded:app:/forms/pay-invoice.html" camunda:candidateGroups="users">
+      <bpmn:incoming>SequenceFlow_0r3iify</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0sevl6b</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Credit_Task" name="Redeem Credit" camunda:formKey="embedded:app:/forms/redeem-credit.html" camunda:candidateGroups="managers">
+      <bpmn:incoming>SequenceFlow_1r9yo6h</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0a3516t</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="invoice_process">
+      <bpmndi:BPMNShape id="StartEvent_1huti6q_di" bpmnElement="Start_Invoice_Process">
+        <dc:Bounds x="170" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="143" y="138" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1rfbws5_di" bpmnElement="ExclusiveGateway_1rfbws5" isMarkerVisible="true">
+        <dc:Bounds x="297" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="277" y="145" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xwlklw_di" bpmnElement="SequenceFlow_1xwlklw">
+        <di:waypoint xsi:type="dc:Point" x="206" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="297" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="206.5" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0r3iify_di" bpmnElement="SequenceFlow_0r3iify">
+        <di:waypoint xsi:type="dc:Point" x="347" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="436" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="346.5" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1r9yo6h_di" bpmnElement="SequenceFlow_1r9yo6h">
+        <di:waypoint xsi:type="dc:Point" x="322" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="322" y="270" />
+        <di:waypoint xsi:type="dc:Point" x="436" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="292" y="197.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0uq2idy_di" bpmnElement="EndEvent_0uq2idy">
+        <dc:Bounds x="630" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="288" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0a3516t_di" bpmnElement="SequenceFlow_0a3516t">
+        <di:waypoint xsi:type="dc:Point" x="536" y="270" />
+        <di:waypoint xsi:type="dc:Point" x="630" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="538" y="245" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1jwhvcw_di" bpmnElement="EndEvent_1jwhvcw">
+        <dc:Bounds x="630" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="138" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0sevl6b_di" bpmnElement="SequenceFlow_0sevl6b">
+        <di:waypoint xsi:type="dc:Point" x="536" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="630" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="538" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0vstq41_di" bpmnElement="Invoice_Task">
+        <dc:Bounds x="436" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0htr9o4_di" bpmnElement="Credit_Task">
+        <dc:Bounds x="436" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
