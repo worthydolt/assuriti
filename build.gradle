@@ -14,7 +14,7 @@ buildscript {
         maven { url "http://repo.spring.io/snapshot" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
     }
 }
 
@@ -44,7 +44,7 @@ dependencies {
     compile group: 'org.camunda.bpm', name: 'camunda-bom', version: '7.5.0', ext: 'pom'
     compile group: 'com.h2database', name: 'h2', version: '1.4.192'
     compile 'org.postgresql:postgresql'
-    compile "org.flywaydb:flyway-core:3.2.1"
+    compile "org.flywaydb:flyway-core:4.1.2"
 }
 
 bootRun {
